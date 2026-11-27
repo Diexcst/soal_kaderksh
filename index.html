@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f8a6a">
+<meta name="description" content="Latihan soal kompetensi kader posyandu dan KSH dengan pembahasan">
+<title>Latihan Kompetensi Kader Posyandu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="w">
+
+  <header class="brand">
+    <div class="logo">✚</div>
+    <h1>Pusat Latihan Kompetensi Kader<small>Posyandu &amp; KSH · simulasi uji kompetensi</small></h1>
+  </header>
+
+  <nav id="nav">
+    <button data-v="home" class="on">Latihan</button>
+    <button data-v="perf">Performa</button>
+  </nav>
+
+  <main>
+    <!-- ===== BERANDA ===== -->
+    <section id="v-home">
+      <div class="card">
+        <h2>Data peserta</h2>
+        <div class="row">
+          <div><label for="pn">Nama kader</label><input id="pn" placeholder="Nama lengkap"></div>
+          <div><label for="pp">Posyandu / Desa</label><input id="pp" placeholder="mis. Posyandu Melati"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Mulai sesi</h2>
+        <p class="mu">Setiap sesi dimulai, soal disusun ulang sehingga isi dan urutan soal selalu baru.</p>
+        <div class="row">
+          <div><label for="c">Kategori</label><select id="c"></select></div>
+          <div><label for="n">Jumlah soal</label>
+            <select id="n"><option value="10">10 soal</option><option value="20" selected>20 soal</option><option value="30">30 soal</option><option value="50">50 soal</option></select></div>
+          <div><label for="m">Mode</label>
+            <select id="m"><option value="ujian">Ujian simulasi (timer, pembahasan di akhir)</option><option value="latihan">Latihan belajar (langsung dibahas)</option></select></div>
+        </div>
+        <p><button class="p" id="btn-start">Mulai kerjakan</button></p>
+      </div>
+      <div class="card mu">Ujian simulasi memakai timer 1 menit per soal dan batas lulus 70. Pembahasan lengkap ditampilkan di akhir. Mode latihan membahas tiap soal langsung setelah dijawab. Semua hasil tercatat di menu Performa.</div>
+    </section>
+
+    <!-- ===== MEMUAT SOAL ===== -->
+    <section id="v-load" hidden>
+      <div class="card" style="text-align:center">
+        <h2>Menyusun soal baru...</h2>
+        <p class="mu">Untuk 50 soal prosesnya bisa sampai satu menit, mohon tunggu.</p>
+      </div>
+    </section>
+
+    <!-- ===== KUIS ===== -->
+    <section id="v-quiz" hidden>
+      <div class="card">
+        <div class="mu top"><span>Soal <b id="qi"></b> dari <b id="qt"></b> · <span class="tag" id="qk"></span></span><b id="tm"></b></div>
+        <div class="bar"><i id="qbar"></i></div>
+        <div class="nvg" id="nvg"></div>
+        <h2 id="qq"></h2>
+        <div id="qo"></div>
+        <div class="ex" id="qe" hidden></div>
+        <div class="nv">
+          <button id="prev">← Sebelumnya</button>
+          <button class="p" id="next">Berikutnya →</button>
+          <button class="p" id="finish" hidden>Selesai</button>
+        </div>
+        <p class="mu" id="qh"></p>
+      </div>
+    </section>
+
+    <!-- ===== HASIL ===== -->
+    <section id="v-res" hidden>
+      <div class="card" style="text-align:center">
+        <div class="mu"><b id="rn"></b><br><span id="rm"></span></div>
+        <div class="mu" style="margin-top:10px">Nilai akhir</div>
+        <div class="big" id="rs"></div>
+        <p><span class="tag" id="rl"></span></p>
+        <p class="mu" id="rc"></p>
+        <button class="p" id="r-again">Latihan lagi</button>
+        <button id="r-perf">Lihat performa</button>
+        <button id="r-print">Cetak hasil</button>
+      </div>
+      <div class="card"><h2>Hasil per kategori</h2><div id="rcat"></div></div>
+      <h2 class="sec">Pembahasan</h2>
+      <p class="mu" id="rnote"></p>
+      <div id="rrev"></div>
+    </section>
+
+    <!-- ===== PERFORMA ===== -->
+    <section id="v-perf" hidden>
+      <div class="card" id="p-empty" hidden>
+        <h2>Performa</h2>
+        <p class="mu">Belum ada riwayat. Kerjakan satu latihan dulu.</p>
+        <button class="p" id="p-go">Mulai latihan</button>
+      </div>
+      <div id="p-data" hidden>
+        <div class="card">
+          <h2>Ringkasan</h2>
+          <div class="row stat">
+            <div><div class="big sm" id="p1"></div><div class="mu">Latihan</div></div>
+            <div><div class="big sm" id="p2"></div><div class="mu">Rata-rata</div></div>
+            <div><div class="big sm" id="p3"></div><div class="mu">Terbaik</div></div>
+          </div>
+        </div>
+        <div class="card"><h2>Nilai 10 latihan terakhir</h2><div class="bars" id="pbars"></div></div>
+        <div class="card">
+          <h2>Penguasaan per kategori</h2>
+          <p class="mu">Urut dari yang paling lemah, fokuskan belajar di atas.</p>
+          <div id="pcat"></div>
+        </div>
+        <div class="card">
+          <h2>Riwayat terakhir</h2>
+          <div style="overflow-x:auto"><table>
+            <thead><tr><th>Tanggal</th><th>Mode</th><th>Kategori</th><th>Nilai</th></tr></thead>
+            <tbody id="phist"></tbody>
+          </table></div>
+        </div>
+        <button id="p-reset">Hapus riwayat</button>
+      </div>
+    </section>
+  </main>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
